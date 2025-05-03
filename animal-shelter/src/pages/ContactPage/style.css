@@ -1,0 +1,169 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFECCB;
+    font-family: "Montserrat", sans-serif;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.container {
+    max-width: 1104px;
+    margin: 0 auto;
+    padding: 0 10px;
+    margin-top: 100px;
+}
+
+header {
+    height: 64px;
+    font-size: 13px;
+    box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12);
+    margin: 0px 0px 40px 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #FFECCB;
+    z-index: 100;
+}
+
+.header__container {
+    margin: 0px auto;
+    max-width: 1104px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__nav {
+    display: flex;
+    justify-content: space-between;
+    flex: 0 1 1000px;
+    font-weight: 600;
+    font-size: 18px;
+    color: black;
+}
+
+.nav__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.54);
+    transition-duration: 0.3s;
+}
+
+.nav__item:hover {
+    box-shadow: 0 -2px 0 0 #666666 inset;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+main {
+    padding-top: 104px;
+}
+
+.contacts {
+    padding: 30px 0;
+}
+
+.contacts h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 900;
+    font-size: 44px;
+}
+
+.subtitle {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    margin: 10px 0 30px 0;
+}
+
+.contacts-table-container {
+    overflow-x: auto;
+    /* Добавим горизонтальную прокрутку для маленьких экранов */
+}
+
+.contacts-table {
+    width: 100%;
+    /* Занимает всю доступную ширину */
+    border-collapse: collapse;
+    margin-top: 20px;
+    /* Отступ сверху */
+    background-color: white;
+    border-radius: 24px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.contacts-table th,
+.contacts-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.contacts-table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.contacts-table td {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/* Убираем бордер у последней строки */
+.contacts-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.footer {
+    width: 100%;
+    height: 128px;
+    margin: 64px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer__line {
+    width: 1104px;
+    height: 20px;
+    box-shadow: 0px -1px 0px 0px #b8b7b7 inset;
+    margin: 20px 128px 20px;
+    flex: 0 0 1104px;
+}
+
+.footer__content {
+    flex: 0 1 1104px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1104px;
+    margin: 0px 0px 24px 0px;
+}
+
+.footer__left {
+    width: 300px;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+}

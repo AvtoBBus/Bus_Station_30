@@ -1,0 +1,48 @@
+h2 {
+    text-align: center;
+    margin: 100px auto 0;
+    font-weight: 900;
+    font-size: 44px;
+}
+
+.animal-list {
+    width: 1000px;
+    margin: 20px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    row-gap: 40px;
+    column-gap: 20px;
+    justify-items: center;
+    justify-content: space-between;
+}
+
+.animal-card {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.animal-card p {
+    margin: 0;
+}
+
+.animal-card h3 {
+    margin: 7px auto;
+    font-weight: 700;
+}
+
+.animal-card__text {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    margin-bottom: 7px;
+}
+
+.animal-card__text p {
+    padding: 4px;
+    border-bottom: 1px solid #B85B2D;
+}
+
+.text__left {
+    font-weight: 600;
+}

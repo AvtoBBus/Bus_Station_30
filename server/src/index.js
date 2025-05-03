@@ -1,9 +1,23 @@
 const express = require("express");
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const app = express();
 
-const petsRoute = require("./routes/petsRoute");
+app.use(express.json({ limit: "50mb" }));
+app.use(cookieParser());
+app.use(cors({
+    credentials: true,
+    origin: true
+}));
 
-app.use("/pets", petsRoute)
+const petsRoute = require("./routes/petsRoute");
+app.use("/pets", petsRoute);
+
+const usersActionsRoute = require("./routes/usersActionsRoute");
+app.use("/usersActions", usersActionsRoute);
+
+const authRoute = require("./routes/authorizationRoute");
+app.use("/login", authRoute);
 
 app.use(function (req, res, next) {
     res.status(404).send("Not Found")

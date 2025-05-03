@@ -1,0 +1,73 @@
+.admin-login {
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-login h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.admin-login form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+
+.admin-login form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 17px;
+    text-align: left;
+}
+
+.admin-login form input,
+.admin-login form button {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.admin-login form button[type=submit] {
+    display: inline-block;
+    background-color: #24ad69;
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    align-self: center;
+}
+
+.admin-login form button[type=submit]:hover {
+    background-color: #1a814e;
+    color: wheat;
+}
+
+#loginMessage {
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.add-animal-form {
+    margin-top: 10px;
+}

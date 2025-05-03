@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFECCB;
+    font-family: "Montserrat", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.title {
+    min-height: 48px;
+    font-weight: 900;
+    font-size: 44px;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+}
+
+.main-info {
+    margin-top: 65px;
+    display: flex;
+    height: 812px;
+    padding: 40px 128px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-info__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.main-info__text {
+    display: flex;
+    width: 912px;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.main-info__button {
+    display: inline-block;
+    background-color: #24ad69;
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    align-self: center;
+}
+
+.main-info__button:hover {
+    background-color: #1a814e;
+    color: wheat;
+}
+
+.main-info_pic {
+    max-width: 1104px;
+    max-height: 460px;
+}
+
+.main-info_pic img {
+    object-fit: fill;
+}
+
+.pets {
+    width: 100%;
+    max-height: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.pets__header {
+    width: 100%;
+    display: flex;
+    padding: 25px 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.pets__body {
+    width: 100%;
+    padding: 25px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 48px;
+}
+
+.pets__column {
+    cursor: pointer;
+    display: flex;
+    width: 500px;
+    min-height: 232px;
+    padding: 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    border-radius: 24px;
+    background-color: #fff;
+}
+
+.pets__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+}
+
+.pets__title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 28px;
+
+}
+
+.pets__text {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+@media (max-width: 1200px) {
+    .header__container {
+        min-width: 800px;
+    }
+
+    .nav__item {
+        min-height: 64px;
+    }
+
+    .main-info {
+        padding: 10px;
+    }
+
+    .main-info__text {
+        width: 90%;
+        flex-wrap: wrap;
+    }
+}
+
+.petsawai__header {
+    padding: 50px;
+    min-height: auto;
+    font-weight: 500;
+    font-size: 44px;
+    text-align: center;
+}
+
+.petsawai__card {
+    width: 70%;
+    height: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100px;
+    box-shadow: 0px 20px 30px 5px rgba(0, 0, 0, 0.05);
+    background-color: white;
+}
+
+.petsawai__photo {
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+    position: center;
+    margin: 0 auto;
+}
+
+.petsawai__photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
+.swiper {
+    width: 100%;
+    max-width: 800px;
+    /* Увеличенная ширина */
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.swiper-slide img {
+    max-width: 100%;
+    max-height: 400px;
+    /* Увеличенная высота */
+    border-radius: 16px;
+    display: block;
+}
+
+.swiper-pagination-bullet {
+    background-color: #ddd;
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #24ad69;
+}
+
+.swiper-button-prev,
+.swiper-button-next,
+.swiper-pagination {
+    --swiper-theme-color: #1a814e;
+}
+
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+    display: flex;
+}
+
+.carousel-inner {
+    background-color: #edd1a1;
+    padding: 24px;
+    border-radius: 24px;
+}
+
+.carousel-item img {
+    max-height: 270px;
+    margin: 0 auto;
+    margin-bottom: 230px;
+    vertical-align: middle;
+    border-radius: 24px;
+}
+
+.carousel-item p {
+    margin: 0;
+}

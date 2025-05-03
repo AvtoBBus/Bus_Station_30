@@ -1,0 +1,287 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFECCB;
+    font-family: "Montserrat", sans-serif;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.container {
+    max-width: 1104px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.nav__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.54);
+    transition-duration: 0.3s;
+}
+
+.nav__item:hover {
+    box-shadow: 0 -2px 0 0 #666666 inset;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+main {
+    padding-top: 104px;
+}
+
+.donate {
+    padding: 30px 0;
+    margin-top: 100px;
+}
+
+.donate h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 900;
+    font-size: 44px;
+}
+
+.subtitle {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    margin: 10px 0 30px 0;
+}
+
+.help-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.help-card {
+    background-color: white;
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    width: calc(50% - 24px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.help-card img {
+    max-width: 55%;
+    height: auto;
+    border-radius: 16px;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.help-card h3 {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    color: black;
+}
+
+.help-card p {
+    margin: 5px 0;
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 400;
+    text-align: left;
+}
+
+.help-card ul {
+    margin-left: 20px;
+}
+
+.help-card ul li {
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.help-button-container {
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 0px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 110;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 24px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form p {
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+form input,
+select,
+textarea,
+button {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+form button[type=submit] {
+    display: inline-block;
+    background-color: #24ad69;
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    align-self: center;
+}
+
+form button[type=submit]:hover {
+    background-color: #1a814e;
+    color: wheat;
+}
+
+#donationMessage,
+#volunteerMessageText {
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    color: #1a814e;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.forms-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.donate-button,
+.volunteer-button {
+    display: inline-block;
+    background-color: #24ad69;
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.donate-button:hover,
+.volunteer-button:hover {
+    background-color: #1a814e;
+    color: wheat;
+}
+
+.footer {
+    width: 100%;
+    height: 128px;
+    margin: 64px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer__line {
+    width: 1104px;
+    height: 20px;
+    box-shadow: 0px -1px 0px 0px #b8b7b7 inset;
+    margin: 20px 128px 20px;
+    flex: 0 0 1104px;
+}
+
+.footer__content {
+    flex: 0 1 1104px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1104px;
+    margin: 0px 0px 24px 0px;
+}
+
+.footer__left {
+    width: 300px;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+}

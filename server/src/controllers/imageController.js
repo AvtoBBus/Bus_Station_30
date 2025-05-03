@@ -24,6 +24,7 @@ exports.getPetsImg = async function (request, response) {
     if (!image || image.length === 0) response.status(404).send("Img not found");
     else {
         const filePath = path.join("D:\\учёба\\для себя\\Bus_Station_30\\server\\src", image[0].img);
+
         if (!fs.existsSync(filePath)) {
             return response.status(404).send('Img not found');
         }
