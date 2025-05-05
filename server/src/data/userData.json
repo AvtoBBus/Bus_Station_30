@@ -1,0 +1,10 @@
+[{
+  "_id": {
+    "$oid": "681333e51ce4f99e84e96783"
+  },
+  "userName": "admin",
+  "userRole": "user",
+  "password": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+  "token": "",
+  "salt": "e689a7d4654e89347da40956b32465b1a60e1c24cf2c4446e6d9d6d994029186"
+}]

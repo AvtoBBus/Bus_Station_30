@@ -1,142 +1,221 @@
-[
-    {
-        "petType": "dog",
-        "petName": "Рекс",
-        "breed": "Немецкая овчарка",
-        "age": 2,
-        "features": "Умный, послушный, любит внимание.",
-        "img": "\\assets\\dogs\\1.jpg",
-        "illness": "Здоров",
-        "status": "Новоприбывший"
-    },
-    {
-        "petType": "dog",
-        "petName": "Белла",
-        "breed": "Лабрадор",
-        "age": 4,
-        "features": "Добрая и дружелюбная, любит детей.",
-        "img": "\\assets\\dogs\\2.jpg",
-        "illness": "Проблемы с желудком",
-        "status": "На лечении"
-    },
-    {
-        "petType": "dog",
-        "petName": "Шарик",
-        "breed": "Метис",
-        "age": 1,
-        "features": "Активный и игривый, любит внимание.",
-        "img": "\\assets\\dogs\\3.jpg",
-        "illness": "Здоров",
-        "status": "Новоприбывший"
-    },
-    {
-        "petType": "dog",
-        "petName": "Барон",
-        "breed": "Бульдог",
-        "age": 5,
-        "features": "Спокойный, любит поспать и погулять.",
-        "img": "\\assets\\dogs\\4.jpg",
-        "illness": "Здоров",
-        "status": "Долгожитель"
-    },
-    {
-        "petType": "dog",
-        "petName": "Лайка",
-        "breed": "Хаски",
-        "age": 3,
-        "features": "Активный и энергичная, любит долгие прогулки.",
-        "img": "\\assets\\dogs\\5.jpg",
-        "illness": "Здорова",
-        "status": "Новоприбывшая"
-    },
-    {
-        "petType": "dog",
-        "petName": "Симба",
-        "breed": "Йоркширскиий терьер",
-        "age": 2,
-        "features": "Игривый, нежный, подойдет для небольшой семьи.",
-        "img": "\\assets\\dogs\\6.jpg",
-        "illness": "Здоров",
-        "status": "Новоприбывший"
-    },
-    {
-        "age": 3,
-        "breed": "Сибирская",
-        "features": "Ласковая и игривая, любит внимание.",
-        "illness": "Здорова",
-        "img": "\\assets\\cats\\1.jpg",
-        "petName": "Мурка",
-        "petType": "cat",
-        "status": "Долгожитель"
-    },
-    {
-        "age": 1,
-        "breed": "Шотландская вислоухая",
-        "features": "Спокойный и любопытный, любит наблюдать.",
-        "illness": "Здорова",
-        "img": "\\assets\\cats\\2.jpg",
-        "petName": "Барсик",
-        "petType": "cat",
-        "status": "Новоприбывший"
-    },
-    {
-        "age": 5,
-        "breed": "Персидская",
-        "features": "Нежная и общительная, любит сидеть на ручках.",
-        "illness": "Простуда",
-        "img": "\\assets\\cats\\3.jpg",
-        "petName": "Снежка",
-        "petType": "cat",
-        "status": "Лечение"
-    },
-    {
-        "age": 0.5,
-        "breed": "Рэгдол",
-        "features": "Шаловливая и добрая, любит играть.",
-        "illness": "Здорова",
-        "img": "\\assets\\cats\\4.jpg",
-        "petName": "Люся",
-        "petType": "cat",
-        "status": "Долгожитель"
-    },
-    {
-        "age": 2,
-        "breed": null,
-        "features": "Милая и добрая, но охраняет свою территорию.",
-        "illness": "Здорова",
-        "img": "\\assets\\cats\\5.jpg",
-        "petName": "Саша",
-        "petType": "cat",
-        "status": "Долгожитель"
-    },
-    {
-        "age": 5,
-        "breed": "Персидская",
-        "features": "Нежная и общительная, любит сидеть на ручках.",
-        "illness": "Здорова",
-        "img": "\\assets\\cats\\6.jpg",
-        "petName": "Вика",
-        "petType": "cat",
-        "status": "Долгожитель"
-    },
-    {
-        "age": 1,
-        "breed": "Тайская",
-        "features": "Самая добрая, тихая и ласковая кошечка на свете.",
-        "illness": "Здорова",
-        "img": "\\assets\\cats\\7.jpg",
-        "petName": "Кристина",
-        "petType": "cat",
-        "status": "Новоприбывшая"
-    },
-    {
-        "age": 2,
-        "breed": "Тайская",
-        "features": "Очень обаятельный и игривый малыш, любит, когда его гладят.",
-        "illness": "Здорова",
-        "img": "\\assets\\cats\\8.jpg",
-        "petName": "Тема",
-        "petType": "cat",
-        "status": "Долгожитель"
-    }
-]
+[{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad058b"
+  },
+  "breed": "Немецкая овчарка",
+  "age": 2,
+  "features": "Умный, послушный, любит внимание.",
+  "img": "\\assets\\dogs\\1.jpg",
+  "illness": "Здоров",
+  "status": "Новоприбывший",
+  "animalName": "Рекс",
+  "animalType": "dog"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad058c"
+  },
+  "breed": "Лабрадор",
+  "age": 4,
+  "features": "Добрая и дружелюбная, любит детей.",
+  "img": "\\assets\\dogs\\2.jpg",
+  "illness": "Проблемы с желудком",
+  "status": "На лечении",
+  "animalName": "Белла",
+  "animalType": "dog"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad058d"
+  },
+  "breed": "Метис",
+  "age": 1,
+  "features": "Активный и игривый, любит внимание.",
+  "img": "\\assets\\dogs\\3.jpg",
+  "illness": "Здоров",
+  "status": "Новоприбывший",
+  "animalName": "Шарик",
+  "animalType": "dog"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad058e"
+  },
+  "breed": "Бульдог",
+  "age": 5,
+  "features": "Спокойный, любит поспать и погулять.",
+  "img": "\\assets\\dogs\\4.jpg",
+  "illness": "Здоров",
+  "status": "Долгожитель",
+  "animalName": "Барон",
+  "animalType": "dog"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad058f"
+  },
+  "breed": "Хаски",
+  "age": 3,
+  "features": "Активный и энергичная, любит долгие прогулки.",
+  "img": "\\assets\\dogs\\5.jpg",
+  "illness": "Здорова",
+  "status": "Новоприбывшая",
+  "animalName": "Лайка",
+  "animalType": "dog"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad0590"
+  },
+  "breed": "Йоркширскиий терьер",
+  "age": 2,
+  "features": "Игривый, нежный, подойдет для небольшой семьи.",
+  "img": "\\assets\\dogs\\6.jpg",
+  "illness": "Здоров",
+  "status": "Новоприбывший",
+  "animalName": "Симба",
+  "animalType": "dog"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad0591"
+  },
+  "age": 3,
+  "breed": "Сибирская",
+  "features": "Ласковая и игривая, любит внимание.",
+  "illness": "Здорова",
+  "img": "\\assets\\cats\\1.jpg",
+  "status": "Долгожитель",
+  "animalName": "Мурка",
+  "animalType": "cat"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad0592"
+  },
+  "age": 1,
+  "breed": "Шотландская вислоухая",
+  "features": "Спокойный и любопытный, любит наблюдать.",
+  "illness": "Здорова",
+  "img": "\\assets\\cats\\2.jpg",
+  "status": "Новоприбывший",
+  "animalName": "Барсик",
+  "animalType": "cat"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad0593"
+  },
+  "age": 5,
+  "breed": "Персидская",
+  "features": "Нежная и общительная, любит сидеть на ручках.",
+  "illness": "Простуда",
+  "img": "\\assets\\cats\\3.jpg",
+  "status": "Лечение",
+  "animalName": "Снежка",
+  "animalType": "cat"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad0594"
+  },
+  "age": 0.5,
+  "breed": "Рэгдол",
+  "features": "Шаловливая и добрая, любит играть.",
+  "illness": "Здорова",
+  "img": "\\assets\\cats\\4.jpg",
+  "status": "Долгожитель",
+  "animalName": "Люся",
+  "animalType": "cat"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad0595"
+  },
+  "age": 2,
+  "breed": null,
+  "features": "Милая и добрая, но охраняет свою территорию.",
+  "illness": "Здорова",
+  "img": "\\assets\\cats\\5.jpg",
+  "status": "Долгожитель",
+  "animalName": "Саша",
+  "animalType": "cat"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad0596"
+  },
+  "age": 5,
+  "breed": "Персидская",
+  "features": "Нежная и общительная, любит сидеть на ручках.",
+  "illness": "Здорова",
+  "img": "\\assets\\cats\\6.jpg",
+  "status": "Долгожитель",
+  "animalName": "Вика",
+  "animalType": "cat"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad0597"
+  },
+  "age": 1,
+  "breed": "Тайская",
+  "features": "Самая добрая, тихая и ласковая кошечка на свете.",
+  "illness": "Здорова",
+  "img": "\\assets\\cats\\7.jpg",
+  "status": "Новоприбывшая",
+  "animalName": "Кристина",
+  "animalType": "cat"
+},
+{
+  "_id": {
+    "$oid": "680ce97bd77eadeffcad0598"
+  },
+  "age": 2,
+  "breed": "Тайская",
+  "features": "Очень обаятельный и игривый малыш, любит, когда его гладят.",
+  "illness": "Здорова",
+  "img": "\\assets\\cats\\8.jpg",
+  "status": "Долгожитель",
+  "animalName": "Тема",
+  "animalType": "cat"
+},
+{
+  "_id": {
+    "$oid": "6816617106de83d913c01c5a"
+  },
+  "animalType": "cat",
+  "animalName": "tetst",
+  "breed": "test",
+  "age": 2,
+  "features": "test",
+  "img": "\\assets\\cats\\1746297201821_0.7505027262532431_IMG_2484.JPG",
+  "illness": "test",
+  "status": "в приюте"
+},
+{
+  "_id": {
+    "$oid": "681662908d5baec0a31b1a33"
+  },
+  "animalType": "cat",
+  "animalName": "123",
+  "breed": "123",
+  "age": 33,
+  "features": "333",
+  "img": "\\assets\\cats\\1746297488332_0.8342102637423945_IMG_3402.JPG",
+  "illness": "333",
+  "status": "в приюте"
+},
+{
+  "_id": {
+    "$oid": "68172f1c8493ec1a4b520f0e"
+  },
+  "animalType": "dog",
+  "animalName": "псина",
+  "breed": "сутулая",
+  "age": 50,
+  "features": "гангагпгпнопнонп",
+  "img": "\\assets\\dogs\\1746349852897_0.17489924699297066_ABUW3020.JPG",
+  "illness": "больной",
+  "status": "в приюте"
+}]

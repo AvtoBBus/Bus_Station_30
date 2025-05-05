@@ -25,8 +25,6 @@ export const OurPetsPage = (props: { isOpenModal: boolean }) => {
         setDataList(petsContainer.pets.filter(pet => pet.animalType === selectedType))
     }, [selectedType])
 
-    console.log({ dataList })
-
     return <>
         <div className="buttons-container" style={{ marginTop: "120px" }}>
             <button onClick={() => setSelectedType('cat')}>Кошки</button>
