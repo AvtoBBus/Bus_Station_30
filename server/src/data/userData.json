@@ -3,8 +3,18 @@
     "$oid": "681333e51ce4f99e84e96783"
   },
   "userName": "admin",
-  "userRole": "user",
+  "userRole": "admin",
   "password": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
   "token": "",
+  "salt": "e689a7d4654e89347da40956b32465b1a60e1c24cf2c4446e6d9d6d994029186"
+},
+{
+  "_id": {
+    "$oid": "6820aca5950e42f233e7a8da"
+  },
+  "userName": "user",
+  "userRole": "user",
+  "password": "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb",
+  "token": "b75bd97f303e5eeaf51d02020cbd6070fa249e3bb6ed28115eb121fc76afec22",
   "salt": "e689a7d4654e89347da40956b32465b1a60e1c24cf2c4446e6d9d6d994029186"
 }]
