@@ -61,6 +61,21 @@ exports.addNewAnimal = async function (request, response) {
             return;
         }
 
+        const userDB = client.db("user");
+        const usersCollection = userDB.collection("users");
+        const userFromDB = await usersCollection.find({ userName: data.username }).toArray();
+
+        if (!userFromDB) {
+            response.status(400).send("Bad credentials")
+            return;
+        }
+
+        if (userFromDB && userFromDB.at(0).userRole !== "admin") {
+            response.status(403).send(null);
+            return;
+        }
+
+
         const data = request.body;
 
         if (!data) {

@@ -6,6 +6,7 @@ const authorizationRoute = express.Router();
 authorizationRoute.get("/userinfo", authorizationController.userinfo);
 authorizationRoute.post("/auth", authorizationController.auth);
 authorizationRoute.get("/logout", authorizationController.logout);
+authorizationRoute.get("/getUserActions", authorizationController.getUserActions);
 
 
 module.exports = authorizationRoute;

@@ -21,7 +21,8 @@ export const App = () => {
   const initUser: User = {
     userId: "-1",
     userName: "anonim",
-    userRole: "anonim"
+    userRole: "anonim",
+    userActions: []
   }
 
   const [user, setUser] = useState<User>(initUser);
@@ -55,15 +56,27 @@ export const App = () => {
   useEffect(() => {
     const userApi = new UserApi();
 
-    userApi.userInfo()
-      .then(r => {
-        setUser(r);
+    Promise.all([
+      userApi.userInfo(),
+      userApi.getUserActions()
+    ])
+      .then(responses => {
+        setUser({
+          ...responses[0],
+          userActions: responses[1]
+        });
       })
 
     const interval = setInterval(() => {
-      userApi.userInfo()
-        .then(r => {
-          setUser(r);
+      Promise.all([
+        userApi.userInfo(),
+        userApi.getUserActions()
+      ])
+        .then(responses => {
+          setUser({
+            ...responses[0],
+            userActions: responses[1] ?? []
+          });
         })
     }, 5000);
 
@@ -110,7 +123,16 @@ export const App = () => {
                   else {
                     r.json()
                       .then((j: any) => {
-                        setUser(j);
+                        Promise.all([
+                          userApi.userInfo(),
+                          userApi.getUserActions()
+                        ])
+                          .then(responses => {
+                            setUser({
+                              ...responses[0],
+                              userActions: responses[1] ?? []
+                            });
+                          })
                       })
                     loginButtonClick();
                     setUserLogin("");

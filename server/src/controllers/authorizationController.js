@@ -1,4 +1,5 @@
 const { ObjectId } = require("mongodb");
+const { getUserActionsModel } = require("../models/usersActionsModels");
 
 const connectionString = process.env.DB_CONNECTION_STRING;
 
@@ -28,11 +29,12 @@ exports.userinfo = async function (request, response) {
         const userFromDB = await collection.find({ token: cookieToken }).toArray();
 
         if (userFromDB && userFromDB.length > 0) {
+
             response.setHeader('Content-Type', 'application/json');
             response.send({
                 userId: userFromDB.at(0)._id,
                 userName: userFromDB.at(0).userName,
-                userRole: userFromDB.at(0).userRole
+                userRole: userFromDB.at(0).userRole,
             });
             return;
         }
@@ -41,7 +43,37 @@ exports.userinfo = async function (request, response) {
         }
 
     }
+}
 
+exports.getUserActions = async function (request, response) {
+    const cookieToken = request.cookies.apiToken;
+    if (!cookieToken) {
+        response.status(401).send("need token");
+        return;
+    }
+    else {
+        const MongoClient = require("mongodb").MongoClient;
+        const client = new MongoClient(connectionString);
+
+        const db = client.db("user");
+        const collection = db.collection("users");
+
+        const userFromDB = await collection.find({ token: cookieToken }).toArray();
+
+        if (userFromDB && userFromDB.length > 0) {
+
+            const actionsCollection = db.collection("usersActions");
+            const userActionsHistory = await actionsCollection.find({ name: userFromDB.at(0).userName }).project(getUserActionsModel).toArray();
+
+            response.setHeader('Content-Type', 'application/json');
+            response.send(userActionsHistory);
+            return;
+        }
+        else {
+            response.status(401).send("bad credentials");
+        }
+
+    }
 }
 
 exports.auth = async function (request, response) {
@@ -69,6 +101,7 @@ exports.auth = async function (request, response) {
                 return;
             }
             response.setHeader('Content-Type', 'application/json');
+
 
             const newToken = await generateHash(userFromDB.at(0).password + Math.random().toString() + userFromDB.at(0).salt);
 

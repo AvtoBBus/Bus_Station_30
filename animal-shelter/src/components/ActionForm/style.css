@@ -45,7 +45,8 @@ button {
     font-size: 16px;
 }
 
-form button {
+form button,
+.button-exit {
     display: inline-block;
     padding: 16px 36px;
     border-radius: 8px;
@@ -64,11 +65,13 @@ form button:hover {
     color: wheat;
 }
 
-form button[type=submit] {
+form button[type=submit],
+.button-exit {
     background-color: #24ad69;
 }
 
-form button[type=submit]:hover {
+form button[type=submit]:hover,
+.button-exit:hover {
     background-color: #1a814e;
     color: wheat;
 }

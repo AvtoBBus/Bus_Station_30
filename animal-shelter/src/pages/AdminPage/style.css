@@ -71,3 +71,13 @@
 .add-animal-form {
     margin-top: 10px;
 }
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

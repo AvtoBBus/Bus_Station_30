@@ -29,7 +29,7 @@ export const DonatePage = () => {
                 ? <ActionForm
                     isModal={true}
                     model="donate"
-                    title="Заполните форму, чтобы сделать пожертвование:"
+                    title="Перечислите сумму, которую не жалко через СБП:"
                     submitMethod={async (formData: UserWantDonateType) => {
                         const userApi = new UserApi();
                         return userApi.sendDonateForm(formData);

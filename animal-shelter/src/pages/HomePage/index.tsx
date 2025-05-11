@@ -93,13 +93,13 @@ export const HomePage = () => {
             </div>
             <div className="pets__body">
                 <div className="pets__column">
-                    <div className="pets__content" onClick={() => navigate("/cats")}>
+                    <div className="pets__content" onClick={() => navigate("/our-pets")}>
                         <p className="pets__title">Кошки</p>
                         <p className="pets__text">Самые милые котики различных пород, а также спасенные с улицы котята</p>
                     </div>
                 </div>
                 <div className="pets__column">
-                    <div className="pets__content" onClick={() => navigate("/dogs")}>
+                    <div className="pets__content" onClick={() => navigate("/our-pets")}>
                         <p className="pets__title">Собаки</p>
                         <p className="pets__text">Тренированные собаки и прелестные щенки от мала до велика. Каждый найдет себе друга!</p>
                     </div>

@@ -12,7 +12,13 @@ export interface AnimalType {
 export interface User {
     userId: string,
     userName: string,
-    userRole: "anonim" | "user"
+    userRole: "anonim" | "user" | "admin",
+    userActions: Array<{
+        action: string,
+        animalType?: string,
+        donateSize?: number,
+        comment?: string,
+    }>
 }
 
 interface UsetsActionsType {

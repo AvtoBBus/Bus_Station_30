@@ -17,7 +17,6 @@ export class UserApi extends BaseApi {
             .then(r => { return r; })
     }
 
-
     userInfo() {
         return this.sendRequest("GET", "/login/userinfo")
             .then(r => {
@@ -34,5 +33,10 @@ export class UserApi extends BaseApi {
     userLogout() {
         return this.sendRequest("GET", "/login/logout")
             .then(r => { return r; })
+    }
+
+    getUserActions() {
+        return this.sendRequest("GET", "/login/getUserActions")
+            .then(r => { return r.json(); })
     }
 }

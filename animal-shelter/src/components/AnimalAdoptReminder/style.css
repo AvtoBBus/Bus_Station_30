@@ -1,0 +1,30 @@
+.reminder-header {
+    margin: 10px auto;
+}
+
+.reminder-main-list {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.reminder-sub-header {
+    width: 70%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.exit-button {
+    width: 200px;
+    margin: 0 calc(50% - 100px);
+    border: none;
+    background-color: #24ad69;
+    padding: 16px 36px;
+    font-weight: 500;
+    font-size: 20px;
+    transition: all .4s ease-in-out;
+}
+
+.exit-button:hover {
+    background-color: #1a814e;
+    color: wheat;
+}
