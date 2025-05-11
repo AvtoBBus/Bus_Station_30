@@ -61,9 +61,13 @@ exports.addNewAnimal = async function (request, response) {
             return;
         }
 
+        const MongoClient = require("mongodb").MongoClient;
+        const client = new MongoClient(connectionString);
+        const data = request.body;
+
         const userDB = client.db("user");
         const usersCollection = userDB.collection("users");
-        const userFromDB = await usersCollection.find({ userName: data.username }).toArray();
+        const userFromDB = await usersCollection.find({ token: cookieToken }).toArray();
 
         if (!userFromDB) {
             response.status(400).send("Bad credentials")
@@ -75,8 +79,6 @@ exports.addNewAnimal = async function (request, response) {
             return;
         }
 
-
-        const data = request.body;
 
         if (!data) {
             response.status(400).send("Incorrect body");
@@ -99,9 +101,6 @@ exports.addNewAnimal = async function (request, response) {
             fs.unlinkSync(request.file.path);
             return res.status(403).send('Not an image');
         }
-
-        const MongoClient = require("mongodb").MongoClient;
-        const client = new MongoClient(connectionString);
 
         await client.connect();
         const db = client.db("pets");
