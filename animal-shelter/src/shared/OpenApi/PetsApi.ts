@@ -1,4 +1,4 @@
-import { NewAnimalType } from "../DataTypes";
+import { AnimalType, NewAnimalType } from "../DataTypes";
 import { BaseApi } from "./BaseApi";
 
 export class PetsApi extends BaseApi {
@@ -13,9 +13,6 @@ export class PetsApi extends BaseApi {
     }
 
     addNewAnimal(animalType: string, newAnimal: NewAnimalType, file: File) {
-        // const data = JSON.parse(JSON.stringify(newAnimal));
-        // Object.assign(data, { file: file });
-
         const data = new FormData();
         Object.keys(newAnimal).forEach((k: any) => {
             //@ts-ignore
@@ -25,6 +22,20 @@ export class PetsApi extends BaseApi {
         data.append("file", file);
 
         return this.sendRequest('POST', `/pets/addNewAnimal?animalType=${animalType}`, data, true)
+            .then(r => { return r; })
+    }
+
+    editAnimal(animal: AnimalType) {
+        const data = JSON.parse(JSON.stringify(animal));
+        delete data._id;
+        delete data.animalType;
+
+        return this.sendRequest('POST', `/pets/editAnimal?id=${animal._id}`, data, false)
+            .then(r => { return r; })
+    }
+
+    deleteAnimal(animalId: string) {
+        return this.sendRequest('POST', `/pets/deleteAnimal?id=${animalId}`, null, false)
             .then(r => { return r; })
     }
 }

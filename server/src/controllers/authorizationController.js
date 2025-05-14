@@ -133,6 +133,62 @@ exports.auth = async function (request, response) {
     }
 }
 
+exports.register = async function (request, response) {
+    const data = request.body;
+
+    if (
+        data
+        && data.username
+        && data.password
+    ) {
+        const MongoClient = require("mongodb").MongoClient;
+        const client = new MongoClient(connectionString);
+
+        const db = client.db("user");
+        const collection = db.collection("users");
+
+        const userFromDB = await collection.find({ userName: data.username }).toArray();
+
+        if (userFromDB && userFromDB.length === 0) {
+
+            response.setHeader('Content-Type', 'application/json');
+
+            const res = await generateHash(data.password);
+            const newToken = await generateHash(data.password + Math.random().toString() + "e689a7d4654e89347da40956b32465b1a60e1c24cf2c4446e6d9d6d994029186");
+
+            await collection.insertOne({
+                "userName": data.username,
+                "userRole": "user",
+                "password": res,
+                "token": newToken,
+                "salt": "e689a7d4654e89347da40956b32465b1a60e1c24cf2c4446e6d9d6d994029186"
+            });
+
+            const newUser = await collection.find({ userName: data.username }).toArray();
+
+            response.cookie(
+                "apiToken",
+                newToken,
+                {
+                    maxAge: 1000 * 60 * 15,
+                    httpOnly: true,
+                    sameSite: "none",
+                    secure: true
+                })
+            response.send({
+                userId: newUser.at(0)._id,
+                userName: newUser.at(0).userName,
+                userRole: newUser.at(0).userRole
+            });
+            return;
+        }
+        else {
+            response.status(400).send("bad credentials");
+        }
+        response.status(500).send("Something went wrong");
+    }
+}
+
 exports.logout = async function (request, response) {
 
     const cookieToken = request.cookies.apiToken;

@@ -3,7 +3,7 @@
     "$oid": "680ce97bd77eadeffcad058b"
   },
   "breed": "Немецкая овчарка",
-  "age": 2,
+  "age": 1,
   "features": "Умный, послушный, любит внимание.",
   "img": "\\assets\\dogs\\1.jpg",
   "illness": "Здоров",
@@ -188,9 +188,9 @@
   "animalName": "tetst",
   "breed": "test",
   "age": 2,
-  "features": "test",
+  "features": "7777",
   "img": "\\assets\\cats\\1746297201821_0.7505027262532431_IMG_2484.JPG",
-  "illness": "test",
+  "illness": "test123123",
   "status": "в приюте"
 },
 {
@@ -201,21 +201,8 @@
   "animalName": "123",
   "breed": "123",
   "age": 33,
-  "features": "333",
+  "features": "333444555",
   "img": "\\assets\\cats\\1746297488332_0.8342102637423945_IMG_3402.JPG",
   "illness": "333",
-  "status": "в приюте"
-},
-{
-  "_id": {
-    "$oid": "68172f1c8493ec1a4b520f0e"
-  },
-  "animalType": "dog",
-  "animalName": "псина",
-  "breed": "сутулая",
-  "age": 50,
-  "features": "гангагпгпнопнонп",
-  "img": "\\assets\\dogs\\1746349852897_0.17489924699297066_ABUW3020.JPG",
-  "illness": "больной",
   "status": "в приюте"
 }]

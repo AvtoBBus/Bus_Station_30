@@ -9,6 +9,7 @@ import { UserApi } from "../../shared/OpenApi/UserApi";
 import QRCode from "../../shared/assets/qrCode.svg"
 
 import "./style.css"
+import { validateData } from "../../shared/utils/HelpFunctions";
 
 export const ActionForm = (props: {
     isModal: boolean,
@@ -33,6 +34,8 @@ export const ActionForm = (props: {
 
     const [response, setResponse] = useState<any | null>(null);
 
+    const [validateError, setValerror] = useState<string | null>(null);
+
     const getKeys = (): (keyof UserWantAdoptType)[] | (keyof UserWantDonateType)[] | (keyof UserWantVolunteerType)[] | null => {
         if (props.model === "adopt") return Object.keys({ name: "", phone: "", email: "", animalType: "", comment: "" }) as any;
         if (props.model === "donate") return Object.keys({ name: "", phone: "", email: "", donateSize: 0 }) as any;
@@ -56,6 +59,18 @@ export const ActionForm = (props: {
         if (!userInfo || !propertyName || !userInfo.hasOwnProperty(propertyName)) return;
         copy[propertyName] = value;
         setUserInfo(copy);
+    }
+
+    const validateForm = () => {
+        if (!validateData(userInfo.name, "username")) return true;
+        if (props.model === 'adopt' || props.model === "volunteer") {
+            if (userInfo.phone !== "" && validateData(userInfo.phone, "phone")) {
+                if (userInfo.email !== "" && validateData(userInfo.email, "email")) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     useEffect(() => {
@@ -151,14 +166,23 @@ export const ActionForm = (props: {
                         </>
                     })}
                     <div className="buttons-container">
-                        {props.isModal && <button onClick={() => {
-                            props.onClose && props.onClose()
-                            setUserInfo(userInfoInit)
-                            setResponse(null)
-                        }}>Назад</button>}
-                        <button type="submit">Отправить заявку</button>
+                        {
+                            props.isModal
+                            && <button onClick={() => {
+                                props.onClose && props.onClose()
+                                setUserInfo(userInfoInit)
+                                setResponse(null)
+                            }}>Назад</button>
+                        }
+                        <button type="submit" disabled={validateForm()}>Отправить заявку</button>
                     </div>
                     {response && <div id={`adoptMessageText${response.includes("Что-то пошло не так") ? "--error" : ""}`} dangerouslySetInnerHTML={{ __html: response }} />}
+                    {!response
+                        && userInfo.name !== ""
+                        && userInfo.phone !== ""
+                        && userInfo.email !== ""
+                        && validateForm()
+                        && <div id="adoptMessageText--error">Заполните форму корректными данными!</div>}
                 </form>
             }
 

@@ -30,6 +30,11 @@ export class UserApi extends BaseApi {
             .then(r => { return r; })
     }
 
+    userRegister(data: { username: string, password: string }) {
+        return this.sendRequest("POST", "/login/register", data)
+            .then(r => { return r; })
+    }
+
     userLogout() {
         return this.sendRequest("GET", "/login/logout")
             .then(r => { return r; })

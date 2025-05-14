@@ -14,6 +14,7 @@ import { ContactsPage } from './pages/ContactPage';
 import { UserContainer } from './shared/container/UserContainer';
 import { UserApi } from './shared/OpenApi/UserApi';
 import { AdminPage } from './pages/AdminPage';
+import { validateData } from './shared/utils/HelpFunctions';
 
 
 export const App = () => {
@@ -31,7 +32,11 @@ export const App = () => {
   const [userLogin, setUserLogin] = useState<string>("");
   const [userPass, setUserPass] = useState<string>("");
 
+  const [regLogin, setRegLogin] = useState<string>("");
+  const [regPass, setRegPass] = useState<string>("");
+
   const [authError, setLoginError] = useState<string | null>(null);
+  const [regError, setRegError] = useState<string | null>(null);
 
   const loginRef = useRef<HTMLDialogElement>(null);
 
@@ -106,82 +111,176 @@ export const App = () => {
           }}
         />
 
-        <dialog ref={loginRef} style={{ border: "none", borderRadius: "24px", minWidth: "400px" }}>
-          <div className="adopt-form-container">
-            <h3>Войти в систему</h3>
-            <form id="adopt-form" onSubmit={(e) => {
-              e.preventDefault();
-              const userApi = new UserApi();
-              userApi.userAuth({
-                username: userLogin,
-                password: userPass
-              })
-                .then(r => {
-                  if (r.status >= 400) {
-                    setLoginError(r);
-                  }
-                  else {
-                    r.json()
-                      .then((j: any) => {
-                        Promise.all([
-                          userApi.userInfo(),
-                          userApi.getUserActions()
-                        ])
-                          .then(responses => {
-                            setUser({
-                              ...responses[0],
-                              userActions: responses[1] ?? []
-                            });
-                          })
-                      })
-                    loginButtonClick();
-                    setUserLogin("");
-                    setUserPass("");
-                  }
+        <dialog ref={loginRef} style={{ border: "none", borderRadius: "24px", minWidth: "400px", width: "800px" }}>
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <div className="adopt-form-container">
+              <h3>Создать аккаунт</h3>
+              <form id="adopt-form" onSubmit={(e) => {
+                e.preventDefault();
+                const userApi = new UserApi();
+                userApi.userRegister({
+                  username: regLogin,
+                  password: regPass
                 })
-            }}>
+                  .then(r => {
+                    if (r.status >= 400) {
+                      setLoginError(r);
+                    }
+                    else {
+                      r.json()
+                        .then((j: any) => {
+                          Promise.all([
+                            userApi.userInfo(),
+                            userApi.getUserActions()
+                          ])
+                            .then(responses => {
+                              setUser({
+                                ...responses[0],
+                                userActions: responses[1] ?? []
+                              });
+                            })
+                        })
+                      loginButtonClick();
+                      setRegLogin("");
+                      setRegPass("");
+                    }
+                  })
+              }}>
 
-              <label htmlFor="userLogin-input">Логин</label>
-              <input
-                type="text"
-                id="userLogin-input"
-                name="userLogin-input"
-                required
-                autoComplete="off"
-                value={userLogin}
-                onChange={(e) => setUserLogin(e.target.value)}
-              />
+                <label htmlFor="userLogin-input">Логин</label>
+                <input
+                  type="text"
+                  id="userLogin-input"
+                  name="userLogin-input"
+                  required
+                  autoComplete="off"
+                  value={regLogin}
+                  onChange={(e) => setRegLogin(e.target.value)}
+                />
 
-              <label htmlFor="userPass-input">Пароль</label>
-              <input
-                type="password"
-                id="userPass-input"
-                name="userPass-input"
-                required
-                autoComplete="off"
-                value={userPass}
-                onChange={(e) => setUserPass(e.target.value)}
-              />
+                <label htmlFor="userPass-input">Пароль</label>
+                <input
+                  type="password"
+                  id="userPass-input"
+                  name="userPass-input"
+                  required
+                  autoComplete="off"
+                  value={regPass}
+                  onChange={(e) => setRegPass(e.target.value)}
+                />
 
-              <div className="buttons-container">
-                <button
-                  style={{ minWidth: "initial", maxWidth: "170px", width: "fit-content" }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setUserLogin("");
-                    setUserPass("");
-                    setLoginError(null);
-                    loginButtonClick();
-                  }}>Назад</button>
-                <button
-                  style={{ minWidth: "initial", maxWidth: "170px", width: "fit-content" }}
-                  type="submit"
-                >Войти</button>
-              </div>
-              {authError && <>
-                <div id="adoptMessageText--error">Что то пошло не так</div>
-              </>}
-            </form>
+                <div className="buttons-container">
+                  <button
+                    style={{ minWidth: "initial", maxWidth: "170px", width: "fit-content" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setRegLogin("");
+                      setRegPass("");
+                      setRegError(null);
+                      loginButtonClick();
+                    }}>Назад</button>
+                  <button
+                    disabled={
+                      !validateData(regLogin, "username")
+                      || !validateData(regPass, "password")
+                    }
+                    style={{ minWidth: "initial", maxWidth: "170px", width: "fit-content" }}
+                    type="submit"
+                  >Создать</button>
+                </div>
+                {regError && <>
+                  <div id="adoptMessageText--error">Что то пошло не так</div>
+                </>}
+                {!regError
+                  && regPass !== ""
+                  && !validateData(regPass, "password")
+                  && <div id="adoptMessageText--error">Пароль слишком слабый</div>}
+              </form>
+            </div>
+            <div className="adopt-form-container">
+              <h3>Войти в систему</h3>
+              <form id="adopt-form" onSubmit={(e) => {
+                e.preventDefault();
+                const userApi = new UserApi();
+                userApi.userAuth({
+                  username: userLogin,
+                  password: userPass
+                })
+                  .then(r => {
+                    if (r.status >= 400) {
+                      setLoginError(r);
+                    }
+                    else {
+                      r.json()
+                        .then((j: any) => {
+                          Promise.all([
+                            userApi.userInfo(),
+                            userApi.getUserActions()
+                          ])
+                            .then(responses => {
+                              setUser({
+                                ...responses[0],
+                                userActions: responses[1] ?? []
+                              });
+                            })
+                        })
+                      loginButtonClick();
+                      setUserLogin("");
+                      setUserPass("");
+                    }
+                  })
+              }}>
+
+                <label htmlFor="userLogin-input">Логин</label>
+                <input
+                  type="text"
+                  id="userLogin-input"
+                  name="userLogin-input"
+                  required
+                  autoComplete="off"
+                  value={userLogin}
+                  onChange={(e) => setUserLogin(e.target.value)}
+                />
+
+                <label htmlFor="userPass-input">Пароль</label>
+                <input
+                  type="password"
+                  id="userPass-input"
+                  name="userPass-input"
+                  required
+                  autoComplete="off"
+                  value={userPass}
+                  onChange={(e) => setUserPass(e.target.value)}
+                />
+
+                <div className="buttons-container">
+                  <button
+                    style={{ minWidth: "initial", maxWidth: "170px", width: "fit-content" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setUserLogin("");
+                      setUserPass("");
+                      setLoginError(null);
+                      loginButtonClick();
+                    }}>Назад</button>
+                  <button
+                    disabled={
+                      !validateData(userLogin, "username")
+                      || !validateData(userPass, "password")
+                    }
+                    style={{ minWidth: "initial", maxWidth: "170px", width: "fit-content" }}
+                    type="submit"
+                  >Войти</button>
+                </div>
+                {authError && <>
+                  <div id="adoptMessageText--error">Что то пошло не так</div>
+                </>}
+                {!authError
+                  && userPass !== ""
+                  && !validateData(userPass, "password")
+                  && <div id="adoptMessageText--error">Пароль слишком слабый</div>}
+              </form>
+            </div>
           </div>
         </dialog>
 
@@ -195,7 +294,7 @@ export const App = () => {
         </Routes>
 
         <Footer />
-      </PetsContainer.Provider>
-    </UserContainer.Provider>
+      </PetsContainer.Provider >
+    </UserContainer.Provider >
   </>
 }

@@ -123,3 +123,113 @@ exports.addNewAnimal = async function (request, response) {
         response.status(500).send("Something went wrong");
     }
 }
+
+exports.editAnimal = async function (request, response) {
+    try {
+
+        const cookieToken = request.cookies.apiToken;
+        if (!cookieToken) {
+            response.status(401).send("Need token");
+            return;
+        }
+
+        const MongoClient = require("mongodb").MongoClient;
+        const client = new MongoClient(connectionString);
+        const data = request.body;
+
+        const userDB = client.db("user");
+        const usersCollection = userDB.collection("users");
+        const userFromDB = await usersCollection.find({ token: cookieToken }).toArray();
+
+        if (!userFromDB) {
+            response.status(400).send("Bad credentials")
+            return;
+        }
+
+        if (userFromDB && userFromDB.at(0).userRole !== "admin") {
+            response.status(403).send(null);
+            return;
+        }
+
+
+        if (!data) {
+            response.status(400).send("Incorrect body");
+            return;
+        }
+
+        const animalId = new URLSearchParams(request.query).get("id");
+
+        if (!animalId) {
+            response.status(400).send("Need animal id in query string")
+        }
+
+        await client.connect();
+        const db = client.db("pets");
+        const collection = db.collection("petsCollection");
+        await collection.updateOne(
+            { _id: new ObjectId(animalId) },
+            {
+                $set: {
+                    breed: data.breed,
+                    features: data.features,
+                    illness: data.illness,
+                    status: data.status,
+                    animalName: data.animalName,
+                    age: data.age,
+                }
+            }
+        )
+        response.status(204).send(null);
+        await client.close();
+
+    } catch (error) {
+        console.log(error)
+        response.status(500).send("Something went wrong");
+    }
+}
+
+exports.deleteAnimal = async function (request, response) {
+    try {
+
+        const cookieToken = request.cookies.apiToken;
+        if (!cookieToken) {
+            response.status(401).send("Need token");
+            return;
+        }
+
+        const MongoClient = require("mongodb").MongoClient;
+        const client = new MongoClient(connectionString);
+        const data = request.body;
+
+        const userDB = client.db("user");
+        const usersCollection = userDB.collection("users");
+        const userFromDB = await usersCollection.find({ token: cookieToken }).toArray();
+
+        if (!userFromDB) {
+            response.status(400).send("Bad credentials")
+            return;
+        }
+
+        if (userFromDB && userFromDB.at(0).userRole !== "admin") {
+            response.status(403).send(null);
+            return;
+        }
+
+        const animalId = new URLSearchParams(request.query).get("id");
+
+        if (!animalId) {
+            response.status(400).send("Need animal id in query string")
+        }
+
+        await client.connect();
+        const db = client.db("pets");
+        const collection = db.collection("petsCollection");
+        await collection.deleteOne({ _id: new ObjectId(animalId) })
+        response.status(204).send(null);
+        await client.close();
+
+    } catch (error) {
+        console.log(error)
+        response.status(500).send("Something went wrong");
+    }
+}

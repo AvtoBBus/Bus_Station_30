@@ -22,6 +22,8 @@ var diskStorage = new multer.diskStorage({
 
 var uploadImg = multer({ storage: diskStorage });
 petsRoute.post("/addNewAnimal", uploadImg.single("file"), petsController.addNewAnimal)
+petsRoute.post("/editAnimal", petsController.editAnimal);
+petsRoute.post("/deleteAnimal", petsController.deleteAnimal);
 
 
 const imageController = require("../controllers/imageController");
