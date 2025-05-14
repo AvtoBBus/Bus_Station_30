@@ -4,7 +4,7 @@
   },
   "userName": "admin",
   "userRole": "admin",
-  "password": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+  "password": "e66860546f18cdbbcd86b35e18b525bffc67f772c650cedfe3ff7a0026fa1dee",
   "token": "",
   "salt": "e689a7d4654e89347da40956b32465b1a60e1c24cf2c4446e6d9d6d994029186"
 },
@@ -14,7 +14,7 @@
   },
   "userName": "user",
   "userRole": "user",
-  "password": "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb",
+  "password": "e66860546f18cdbbcd86b35e18b525bffc67f772c650cedfe3ff7a0026fa1dee",
   "token": "",
   "salt": "e689a7d4654e89347da40956b32465b1a60e1c24cf2c4446e6d9d6d994029186"
 },
