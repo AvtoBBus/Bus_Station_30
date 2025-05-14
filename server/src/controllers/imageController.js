@@ -1,7 +1,7 @@
 const { ObjectId } = require("mongodb");
 const { getPetImgModel } = require("../models/getPetImgModel");
 const fs = require('fs');
-const path = require("path");
+const path = require("node:path");
 
 const connectionString = process.env.DB_CONNECTION_STRING;
 
@@ -23,14 +23,12 @@ exports.getPetsImg = async function (request, response) {
 
     if (!image || image.length === 0) response.status(404).send("Img not found");
     else {
-        const filePath = path.join("D:\\учёба\\для себя\\Bus_Station_30\\server\\src", image[0].img);
-
+        const imgPath = image[0].img;
+        const filePath = path.resolve(imgPath.startsWith("\\") ? imgPath.slice(1) : imgPath);
         if (!fs.existsSync(filePath)) {
             return response.status(404).send('Img not found');
         }
         response.sendFile(filePath);
     }
-
     await client.close();
-
 }
