@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("node:path");
 
 const petsController = require("../controllers/petsController");
 const multer = require("multer");
@@ -11,9 +12,9 @@ var diskStorage = new multer.diskStorage({
     destination: (req, file, callback) => {
         const animalType = new URLSearchParams(req.query).get("animalType");
         if (animalType !== "cat" && animalType !== "dog") {
-            callback(null, './assets/unknow');
+            callback(null, 'server/src/assets/unknow');
         }
-        else callback(null, `./assets/${animalType}s`);
+        else callback(null, `server/src/assets/${animalType}s`);
     },
     filename: (req, file, callback) => {
         callback(null, Date.now() + "_" + Math.random() + "_" + file.originalname)

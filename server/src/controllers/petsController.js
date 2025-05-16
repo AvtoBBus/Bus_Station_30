@@ -1,11 +1,13 @@
 const { ObjectId } = require("mongodb");
 const { getPetModel } = require("../models/getPetModel");
 const fs = require("fs")
+const path = require("node:path")
 
 const connectionString = process.env.DB_CONNECTION_STRING;
 
 async function checkForScripts(filePath) {
-    const buffer = fs.readFileSync(filePath);
+
+    const buffer = fs.readFileSync(path.resolve(filePath.slice(1)));
 
     const content = buffer.toString('utf8');
     const dangerousPatterns = [
@@ -95,10 +97,10 @@ exports.addNewAnimal = async function (request, response) {
             return response.status(400).send('Need file');
         }
 
-        const isSafe = await checkForScripts(request.file.path);
+        const isSafe = await checkForScripts(request.file.path.startsWith("\\") ? request.file.path : `\\${request.file.path}`);
 
         if (!isSafe) {
-            fs.unlinkSync(request.file.path);
+            fs.unlinkSync(request.file.path.startsWith("\\") ? request.file.path : `\\${request.file.path}`);
             return res.status(403).send('Not an image');
         }
 
@@ -111,7 +113,7 @@ exports.addNewAnimal = async function (request, response) {
             breed: data.breed,
             age: Number.parseInt(data.age),
             features: data.features,
-            img: request.file.path.startsWith("\\") ? request.file.path : `\\${request.file.path}`,
+            img: request.file.path.startsWith("\\") ? request.file.path.replace("server\\src", "") : `\\${request.file.path.replace("server\\src", "")}`,
             illness: data.illness,
             status: data.status
         })
