@@ -77,6 +77,14 @@ export const ActionForm = (props: {
         if (props.model === "donate") setTimeout(() => props.onClose && props.onClose(), 5000)
     }, [props.model])
 
+    useEffect(() => {
+        if (user?.userId !== "-1") {
+            const copy = JSON.parse(JSON.stringify(userInfo));
+            copy.name = user?.userName;
+            setUserInfo(copy);
+        }
+    }, [user])
+
     return <>
         <div className="adopt-form-container">
             <h3 style={{ width: "70%", margin: "0 auto" }}>{props.title}</h3>

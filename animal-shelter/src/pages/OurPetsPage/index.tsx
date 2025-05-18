@@ -47,7 +47,7 @@ export const OurPetsPage = (props: { isOpenModal: boolean }) => {
         if (editAnimal) {
             const copy = JSON.parse(JSON.stringify(editAnimal)) as AnimalType;
             //@ts-ignore
-            if (copy[key]) {
+            if (copy.hasOwnProperty(key)) {
                 //@ts-ignore
                 copy[key] = newValue;
                 setEditAnimal(copy);
