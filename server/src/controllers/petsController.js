@@ -26,10 +26,29 @@ exports.getPetsList = async function (request, response) {
     const MongoClient = require("mongodb").MongoClient;
     const client = new MongoClient(connectionString);
 
+    const sort = new URLSearchParams(request.query).get("sort");
+    const byWhat = new URLSearchParams(request.query).get("by");
+
+    const sortParam = {}
+
+    if (sort && (sort === "asc" || sort === "desc")) {
+        if (byWhat)
+            switch (byWhat) {
+                case "age":
+                    sort === "asc" ? Object.assign(sortParam, { age: 1 }) : Object.assign(sortParam, { age: -1 })
+                    break
+                case "status":
+                    sort === "asc" ? Object.assign(sortParam, { status: 1 }) : Object.assign(sortParam, { status: -1 })
+                    break;
+                default:
+                    break;
+            }
+    }
+
     await client.connect();
     const db = client.db("pets");
     const collection = db.collection("petsCollection");
-    const petsList = await collection.find().project(getPetModel).toArray();
+    const petsList = await collection.find().sort(sortParam).project(getPetModel).toArray();
     response.send(petsList);
     await client.close();
 }

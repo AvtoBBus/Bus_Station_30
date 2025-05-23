@@ -12,6 +12,8 @@ export const OurPetsPage = (props: { isOpenModal: boolean }) => {
     const [selectedType, setSelectedType] = useState<"cat" | "dog">("cat");
     const [editMode, setEditMode] = useState<boolean>(false);
     const [editAnimal, setEditAnimal] = useState<AnimalType | null>(null);
+    const [byWhat, setByWhat] = useState<"Без сортировки" | "По возрасту" | "По статусу">("Без сортировки");
+    const [sortType, setSortType] = useState<-1 | 0 | 1>(0);
     const { pets, setPets } = useContext(PetsContainer);
     const { user } = useContext(UserContainer);
 
@@ -55,14 +57,46 @@ export const OurPetsPage = (props: { isOpenModal: boolean }) => {
         }
     }
 
+    useEffect(() => {
+        const petsApi = new PetsApi();
+
+        petsApi.getPetsList(
+            sortType === 1 ? "asc" : (sortType === -1 ? "desc" : null),
+            byWhat === "По возрасту" ? "age" : (byWhat === "По статусу" ? "status" : null),
+        )
+            .then(r => {
+                setDataList(r.filter((pet: AnimalType) => pet.animalType === selectedType))
+            })
+    }, [byWhat, sortType])
+
     return <>
-        <div className="buttons-container" style={{ marginTop: "120px" }}>
-            <button onClick={() => setSelectedType('cat')}>Кошки</button>
-            <button onClick={() => setSelectedType('dog')}>Собаки</button>
+        <div className="buttons-container" style={{
+            margin: "120px auto 0",
+            width: "1000px",
+            justifyContent: "flex-start"
+        }}>
+            <button onClick={() => setSelectedType('cat')} style={{ marginRight: "15px" }}>Кошки</button>
+            <button onClick={() => setSelectedType('dog')} style={{ marginRight: "15px" }}>Собаки</button>
+            {/* @ts-ignore */}
+            <select value={byWhat} onChange={(e) => setByWhat(e.target.value)} style={{ marginRight: "15px" }}>
+                <option value="Без сортировки">Без сортировки</option>
+                <option value="По возрасту">По возрасту</option>
+                <option value="По статусу">По статусу</option>
+            </select>
+            {byWhat !== "Без сортировки" && <>
+                <button
+                    className="sort-panel__button hover-button"
+                    style={{ marginRight: "15px", width: "42px" }}
+                    onClick={() => {
+                        if (sortType === -1) setSortType(0);
+                        else if (sortType === 0) setSortType(1);
+                        else if (sortType === 1) setSortType(-1);
+                    }}>{sortType === -1 ? "↓" : (sortType === 1 ? "↑" : '↑↓')}</button>
+            </>}
         </div>
         <h2 style={{ marginTop: 0 }}>Наши {selectedType === 'dog' ? 'собаки' : 'кошки'}</h2>
         <div className="animal-list">
-            {dataList && dataList.map(data => {
+            {dataList && dataList.filter(d => d.status.toLowerCase() !== "усыновлен").map(data => {
                 return <>
                     <div className="animal-card">
                         <CardImg id={data._id} needLoad={Boolean(props.isOpenModal) || editMode} />
@@ -82,7 +116,13 @@ export const OurPetsPage = (props: { isOpenModal: boolean }) => {
                                 : <p>{data.illness || 'Нет болезней'}</p>}
                             <p className="text__left">Статус:</p>
                             {editMode && editAnimal?._id === data._id
-                                ? <input className="text__edit-input" value={editAnimal?.status} onChange={(e) => changeValue("status", e.target.value)} />
+                                ? <>
+                                    <select className="text__edit-input" value={editAnimal?.status} onChange={(e) => changeValue("status", e.target.value)}>
+                                        <option value="в приюте">в приюте</option>
+                                        <option value="усыновлен">усыновлен</option>
+                                        <option value="передержка">передержка</option>
+                                    </select>
+                                </>
                                 : <p>{data.status || 'Неизвестен'}</p>}
                         </div>
                         {editMode && editAnimal?._id === data._id

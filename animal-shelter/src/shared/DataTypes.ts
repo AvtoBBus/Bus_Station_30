@@ -1,3 +1,5 @@
+import { StringMappingType } from "typescript"
+
 export interface AnimalType {
     _id: string,
     animalName: string,
@@ -13,11 +15,17 @@ export interface User {
     userId: string,
     userName: string,
     userRole: "anonim" | "user" | "admin",
+    city: string,
+    email: string,
+    phone: string,
     userActions: Array<{
+        _id: string,
         action: string,
+        name?: string,
         animalType?: string,
         donateSize?: number,
         comment?: string,
+        status: string,
     }>
 }
 

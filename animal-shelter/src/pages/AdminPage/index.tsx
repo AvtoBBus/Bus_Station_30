@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { UserApi } from "../../shared/OpenApi/UserApi";
 
 import "./style.css"
-import { NewAnimalType } from "../../shared/DataTypes";
+import { NewAnimalType, User } from "../../shared/DataTypes";
 import { PetsApi } from "../../shared/OpenApi/PetsApi";
 import { AnimalAdoptReminder } from "../../components/AnimalAdoptReminder";
 
@@ -21,6 +21,16 @@ export const AdminPage = (props: {}) => {
         status: "в приюте"
     }
 
+    const initUser: User = {
+        userId: "-1",
+        userName: "anonim",
+        userRole: "anonim",
+        city: "nowhere",
+        phone: "unknown",
+        email: "unknown",
+        userActions: []
+    }
+
     const convertAction = {
         DONATE: "Пожертование",
         ADOPT: "Усыновление",
@@ -32,11 +42,13 @@ export const AdminPage = (props: {}) => {
         "cat": "кошка"
     }
 
-    const { user } = useContext(UserContainer);
+    const { user, forceUpdateUser } = useContext(UserContainer);
     const navigate = useNavigate();
 
     const [newAnimal, setNewAnimal] = useState<NewAnimalType>(initAnimal);
     const [animalFile, setAnimalFile] = useState<File | null>(null);
+    const [editUserInfo, setEditUserInfo] = useState<User | null>(null);
+    const [isInfoEdit, setIsInfoEdit] = useState<boolean>(false);
 
     const reminderRef = useRef<HTMLDialogElement>(null);
 
@@ -48,6 +60,10 @@ export const AdminPage = (props: {}) => {
                 if (!r || user?.userId === "-1") navigate('/')
             })
     }, [])
+
+    useEffect(() => {
+        if (user && user.userId !== "-1" && !editUserInfo) setEditUserInfo(user);
+    }, [user])
 
     const updValue = (field: keyof typeof initAnimal, value: string | number) => {
         const copy = JSON.parse(JSON.stringify(newAnimal));
@@ -73,6 +89,15 @@ export const AdminPage = (props: {}) => {
         }
     }
 
+    const updUserInfo = (field: keyof typeof initUser, value: string) => {
+        const copy = JSON.parse(JSON.stringify(editUserInfo));
+        if (copy.hasOwnProperty(field)) {
+            copy[field] = value;
+            setEditUserInfo(copy)
+            !isInfoEdit && setIsInfoEdit(true)
+        }
+    }
+
     return <>
 
         <dialog ref={reminderRef} style={{ borderRadius: "24px", border: "none" }}>
@@ -87,8 +112,40 @@ export const AdminPage = (props: {}) => {
             <div className="container">
                 <h2>Информация о пользователе</h2>
                 <div className="user-info">
-                    <p>Имя пользователя: {user?.userName}</p>
-                    <p>Ваша роль: {user?.userRole}</p>
+                    <span>Имя пользователя: <input value={editUserInfo?.userName} onChange={(e) => updUserInfo("userName", e.target.value)} /></span>
+                    <span>Ваша роль: {editUserInfo?.userRole}</span>
+                    <span>Номер телефона: <input value={editUserInfo?.phone} onChange={(e) => updUserInfo("phone", e.target.value)} /></span>
+                    <span>Почта: <input value={editUserInfo?.email} onChange={(e) => updUserInfo("email", e.target.value)} /></span>
+                    <span>Город: <input value={editUserInfo?.city} onChange={(e) => updUserInfo("city", e.target.value)} /></span>
+                    {
+                        isInfoEdit && <>
+                            <div className="buttons-container--edit-user-info">
+                                <button
+                                    style={{ minWidth: "initial", maxWidth: "170px", width: "fit-content" }}
+                                    onClick={(e) => {
+                                        if (editUserInfo) {
+                                            const api = new UserApi();
+                                            api.updateUserInfo(editUserInfo)
+                                                .then(() => {
+                                                    forceUpdateUser()
+                                                    setIsInfoEdit(false);
+                                                })
+                                                .catch(() => {
+                                                    setEditUserInfo(user);
+                                                })
+                                        }
+                                    }}>Сохранить</button>
+                                <button
+                                    disabled={false}
+                                    style={{ minWidth: "initial", maxWidth: "170px", width: "fit-content" }}
+                                    onClick={() => {
+                                        setEditUserInfo(user);
+                                        setIsInfoEdit(false);
+                                    }}
+                                >Отменить</button>
+                            </div>
+                        </>
+                    }
                 </div>
             </div>
 
@@ -97,6 +154,30 @@ export const AdminPage = (props: {}) => {
                 <div className="user-info">
                     {user && user.userActions && user?.userActions.map(action => {
                         return <div style={{ borderBottom: "1px solid black" }}>
+                            {user
+                                && user.userId !== "-1"
+                                && user.userRole === "admin"
+                                && <p><b>Клиент:</b> {action.name ?? "Аноним"}</p>}
+
+                            {user
+                                && user.userId !== "-1"
+                                && user.userRole !== "admin" ?
+                                <p>Статус: {action.status}</p>
+                                : <span>
+                                    Статус:
+                                    <select
+                                        value={action.status}
+                                        onChange={(e) => {
+                                            const api = new UserApi();
+                                            //@ts-ignore
+                                            api.updateActionStatus(action._id, e.target.value)
+                                                .then(() => forceUpdateUser())
+                                        }}>
+                                        <option value="Ожидание">Ожидание</option>
+                                        <option value="Одобрено">Одобрено</option>
+                                        <option value="Отклонено">Отклонено</option>
+                                    </select>
+                                </span>}
                             <p>Что делали: {convertAction[action.action as keyof typeof convertAction]}</p>
                             {action.animalType && <>
                                 <div style={{ display: "flex" }}>
@@ -130,7 +211,7 @@ export const AdminPage = (props: {}) => {
                         e.preventDefault();
                         addNewAnimalHandler();
                     }}>
-                        <label htmlFor="type">Статус:</label>
+                        <label htmlFor="type">Животное:</label>
                         <select
                             id="type"
                             name="type"

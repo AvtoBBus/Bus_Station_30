@@ -102,11 +102,13 @@ main {
 }
 
 .adopt-slider-container {
-    max-width: 700px;
-    text-align: center;
+    width: 720px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: space-between;
 }
 
-.adopt-slider-container h3 {
+.adopt-slider-title {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 10px;

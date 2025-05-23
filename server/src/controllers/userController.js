@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongodb");
-const { getUserActionsModel } = require("../models/usersActionsModels");
+const { getUserActionsModel, getUserActionsModelAdmin } = require("../models/usersActionsModels");
 
 const connectionString = process.env.DB_CONNECTION_STRING;
 
@@ -35,6 +35,9 @@ exports.userinfo = async function (request, response) {
                 userId: userFromDB.at(0)._id,
                 userName: userFromDB.at(0).userName,
                 userRole: userFromDB.at(0).userRole,
+                phone: userFromDB.at(0).phone,
+                city: userFromDB.at(0).city,
+                email: userFromDB.at(0).email
             });
             return;
         }
@@ -42,6 +45,7 @@ exports.userinfo = async function (request, response) {
             response.status(401).send("bad credentials");
         }
 
+        await client.close();
     }
 }
 
@@ -63,16 +67,20 @@ exports.getUserActions = async function (request, response) {
         if (userFromDB && userFromDB.length > 0) {
 
             const actionsCollection = db.collection("usersActions");
-            const userActionsHistory = await actionsCollection.find({ name: userFromDB.at(0).userName }).project(getUserActionsModel).toArray();
+            let userActionsHistory = [];
+
+            if (userFromDB.at(0).userRole === "admin") userActionsHistory = await actionsCollection.find({}).project(getUserActionsModelAdmin).toArray();
+            else userActionsHistory = await actionsCollection.find({ name: userFromDB.at(0).userName }).project(getUserActionsModel).toArray();
 
             response.setHeader('Content-Type', 'application/json');
             response.send(userActionsHistory);
+            await client.close();
             return;
         }
         else {
-            response.status(401).send("bad credentials");
+            response.status(401).send({ error: "bad credentials" });
         }
-
+        await client.close();
     }
 }
 
@@ -124,11 +132,14 @@ exports.auth = async function (request, response) {
                 userName: userFromDB.at(0).userName,
                 userRole: userFromDB.at(0).userRole
             });
+            await client.close();
             return;
         }
         else {
+            await client.close();
             response.status(400).send("bad credentials");
         }
+        await client.close();
         response.status(500).send("Something went wrong");
     }
 }
@@ -140,6 +151,9 @@ exports.register = async function (request, response) {
         data
         && data.username
         && data.password
+        && data.email
+        && data.phone
+        && data.city
     ) {
         const MongoClient = require("mongodb").MongoClient;
         const client = new MongoClient(connectionString);
@@ -161,7 +175,10 @@ exports.register = async function (request, response) {
                 "userRole": "user",
                 "password": res,
                 "token": newToken,
-                "salt": "e689a7d4654e89347da40956b32465b1a60e1c24cf2c4446e6d9d6d994029186"
+                "salt": "e689a7d4654e89347da40956b32465b1a60e1c24cf2c4446e6d9d6d994029186",
+                "city": data.city,
+                "email": data.email,
+                "phone": data.phone
             });
 
             const newUser = await collection.find({ userName: data.username }).toArray();
@@ -175,10 +192,13 @@ exports.register = async function (request, response) {
                     sameSite: "none",
                     secure: true
                 })
-            response.send({
+            response.status(200).send({
                 userId: newUser.at(0)._id,
                 userName: newUser.at(0).userName,
-                userRole: newUser.at(0).userRole
+                userRole: newUser.at(0).userRole,
+                phone: newUser.at(0).phone,
+                city: newUser.at(0).city,
+                email: newUser.at(0).email
             });
             return;
         }
@@ -213,4 +233,118 @@ exports.logout = async function (request, response) {
     response.clearCookie("apiToken");
     response.status(204);
     response.send(null);
+    await client.close();
+}
+
+exports.updateUserInfo = async function (request, response) {
+    const data = request.body;
+    const cookieToken = request.cookies.apiToken;
+
+    if (!cookieToken) {
+        response.status(401).send("need token");
+        return;
+    }
+
+    if (
+        !data || (
+            !data.hasOwnProperty("id")
+            || !data.hasOwnProperty("userName")
+            || !data.hasOwnProperty("city")
+            || !data.hasOwnProperty("email")
+            || !data.hasOwnProperty("phone")
+        )) {
+        response.status(400).send("incorrect data");
+        return;
+    }
+
+    const MongoClient = require("mongodb").MongoClient;
+    const client = new MongoClient(connectionString);
+
+    const db = client.db("user");
+    const collection = db.collection("users");
+
+    const userFromDB = await collection.find({ token: cookieToken }).toArray();
+
+    if (userFromDB.length === 0) {
+        response.status(404).send("not found user");
+        await client.close()
+        return;
+    }
+
+    if (userFromDB.at(0)._id.toString() !== data.id) {
+        response.status(403).send("this is not you");
+        await client.close()
+        return;
+    }
+
+    await collection.updateOne(
+        { _id: userFromDB.at(0)._id },
+        {
+            $set: {
+                "userName": data.userName,
+                "city": data.city,
+                "email": data.email,
+                "phone": data.phone
+            }
+        }
+    )
+
+    response.status(204).send(null)
+    return;
+
+}
+
+exports.updateActionStatus = async function (request, response) {
+    const data = request.body;
+    const STATUSES = ["Ожидание", "Одобрено", "Отклонено"]
+
+    const cookieToken = request.cookies.apiToken;
+    if (!cookieToken) {
+        response.status(401).send("need token");
+        return;
+    }
+
+    const actionId = data.id;
+    const newActionStatus = data.status;
+
+    if (!actionId) {
+        response.status(400).send("need action id");
+        return;
+    }
+
+    if (!newActionStatus || !STATUSES.includes(newActionStatus)) {
+        response.status(400).send("need correct status");
+        return;
+    }
+
+    const MongoClient = require("mongodb").MongoClient;
+    const client = new MongoClient(connectionString);
+
+    const db = client.db("user");
+    const collection = db.collection("users");
+
+    const userFromDB = await collection.find({ token: cookieToken }).toArray();
+
+    if (userFromDB.at(0).userRole !== "admin") {
+        response.status(403).send("only for admin");
+        await client.close();
+        return;
+    }
+
+    const actionsCollection = db.collection("usersActions");
+    const updateResult = await actionsCollection.updateOne(
+        { _id: new ObjectId('' + actionId.trim()) },
+        { $set: { status: newActionStatus } }
+    )
+
+    if (updateResult.modifiedCount === 0) {
+        response.status(400).send("action not found");
+        await client.close();
+        return;
+    }
+
+    response.status(204).send(null);
+    await client.close();
+    return;
+
 }

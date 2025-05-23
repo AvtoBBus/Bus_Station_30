@@ -1,20 +1,15 @@
-import { Carousel } from "react-bootstrap"
-
-//@ts-ignore
-import Happy1 from "../../shared/assets/happy1.jpg"
-//@ts-ignore
-import Happy2 from "../../shared/assets/happy2.jpg"
-//@ts-ignore
-import Happy3 from "../../shared/assets/happy3.jpg"
-
 import "./style.css"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { UserWantAdoptType } from "../../shared/DataTypes"
 import { UserApi } from "../../shared/OpenApi/UserApi"
 import { ActionForm } from "../../components/ActionForm"
+import { PetsContainer } from "../../shared/container/PetsContainer"
+import { CardImg } from "../../components/CardImg"
 
 
 export const AdoptPage = () => {
+
+    const { pets, setPets } = useContext(PetsContainer);
 
     return <>
         <section className="adopt">
@@ -45,19 +40,27 @@ export const AdoptPage = () => {
                         }}
                         onClose={null}
                     />
+                    <h3 className="adopt-slider-title">Посмотрите, каких красавцев уже приютили:</h3>
                     <div className="adopt-slider-container">
-                        <h3>Посмотрите, как счастливы наши бывшие подопечные:</h3>
-                        <Carousel className="swiper">
-                            <Carousel.Item >
-                                <img src={Happy1} alt="" style={{ marginBottom: 0 }} />
-                            </Carousel.Item>
-                            <Carousel.Item >
-                                <img src={Happy2} alt="" style={{ marginBottom: 0 }} />
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img src={Happy3} alt="" style={{ marginBottom: 0 }} />
-                            </Carousel.Item>
-                        </Carousel>
+                        {pets && pets.filter(p => p.status.toLowerCase() === "усыновлен").map(data => {
+                            return <>
+                                <div className="animal-card">
+                                    <CardImg id={data._id} needLoad={false} />
+                                    <h3>{data.animalName}</h3>
+                                    <div className="animal-card__text">
+                                        <p className="text__left">Порода:</p>
+                                        <p>{data.breed || 'Неизвестна'}</p>
+                                        <p className="text__left">Возраст(лет):</p>
+                                        <p>{data.age || 'Неизвестен'}</p>
+                                        <p className="text__left">Болезни:</p>
+                                        <p>{data.illness || 'Нет болезней'}</p>
+                                        <p className="text__left">Статус:</p>
+                                        <p>{data.status || 'Неизвестен'}</p>
+                                    </div>
+                                    <p>{data.features}</p>
+                                </div>
+                            </>
+                        })}
                     </div>
                 </div>
             </div>

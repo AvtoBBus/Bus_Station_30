@@ -81,3 +81,19 @@
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.user-info input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.buttons-container--edit-user-info {
+    justify-content: flex-start;
+}
+
+.buttons-container--edit-user-info button {
+    margin-right: 20px
+}

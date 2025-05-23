@@ -1,4 +1,4 @@
-import { UserWantAdoptType, UserWantDonateType, UserWantVolunteerType } from "../DataTypes";
+import { User, UserWantAdoptType, UserWantDonateType, UserWantVolunteerType } from "../DataTypes";
 import { BaseApi } from "./BaseApi";
 
 export class UserApi extends BaseApi {
@@ -30,7 +30,7 @@ export class UserApi extends BaseApi {
             .then(r => { return r; })
     }
 
-    userRegister(data: { username: string, password: string }) {
+    userRegister(data: { username: string, password: string, email: string, phone: string, city: string }) {
         return this.sendRequest("POST", "/login/register", data)
             .then(r => { return r; })
     }
@@ -40,8 +40,25 @@ export class UserApi extends BaseApi {
             .then(r => { return r; })
     }
 
+    updateUserInfo(user: User) {
+        const data = {
+            id: user.userId,
+            userName: user.userName,
+            city: user.city,
+            phone: user.phone,
+            email: user.email,
+        }
+        return this.sendRequest("POST", "/login/updateUserInfo", data)
+            .then(r => { return r; })
+    }
+
     getUserActions() {
         return this.sendRequest("GET", "/login/getUserActions")
             .then(r => { return r.json(); })
+    }
+
+    updateActionStatus(actionId: string, status: 'Ожидание' | 'Одобрено' | 'Отклонено') {
+        return this.sendRequest("POST", "/login/updateActionStatus", { id: actionId, status: status })
+            .then(r => { return r; })
     }
 }

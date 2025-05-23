@@ -16,7 +16,7 @@ app.use("/pets", petsRoute);
 const usersActionsRoute = require("./routes/usersActionsRoute");
 app.use("/usersActions", usersActionsRoute);
 
-const authRoute = require("./routes/authorizationRoute");
+const authRoute = require("./routes/userRoute");
 app.use("/login", authRoute);
 
 app.use(function (req, res, next) {

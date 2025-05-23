@@ -2,8 +2,11 @@ import { AnimalType, NewAnimalType } from "../DataTypes";
 import { BaseApi } from "./BaseApi";
 
 export class PetsApi extends BaseApi {
-    getPetsList() {
-        return this.sendRequest('GET', '/pets/getPetsList', null)
+    getPetsList(sort?: "asc" | "desc" | null, by?: "age" | "status" | null) {
+        let queryString = "";
+        if (sort && by) queryString += `?sort=${sort}&by=${by}`
+
+        return this.sendRequest('GET', `/pets/getPetsList${queryString}`, null)
             .then(r => { return r.json(); })
     }
 

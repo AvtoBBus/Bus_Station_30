@@ -1,6 +1,9 @@
 .adopt-form-container {
     max-width: 600px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .adopt-form-container h3 {
@@ -9,7 +12,8 @@
     margin-bottom: 10px;
 }
 
-.buttons-container {
+.buttons-container,
+.buttons-container--edit-user-info {
     display: flex;
     width: 100%;
     justify-content: space-around;

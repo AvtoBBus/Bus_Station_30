@@ -26,4 +26,15 @@ exports.getUserActionsModel = {
     animalType: 1,
     donateSize: 1,
     comment: 1,
+    status: 1
+}
+
+exports.getUserActionsModelAdmin = {
+    _id: 1,
+    name: 1,
+    action: 1,
+    animalType: 1,
+    donateSize: 1,
+    comment: 1,
+    status: 1
 }

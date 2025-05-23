@@ -1,4 +1,4 @@
-export const validateData = (data: string, field: "username" | "email" | "phone" | "password" | "number"): boolean => {
+export const validateData = (data: string, field: "username" | "email" | "phone" | "password" | "number" | "city"): boolean => {
     enum getRegExp {
         //@ts-ignore
         username = /^[a-zA-Zа-яА-ЯёЁ0-9_-]{3,20}$/,
@@ -9,7 +9,9 @@ export const validateData = (data: string, field: "username" | "email" | "phone"
         //@ts-ignore
         password = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
         //@ts-ignore
-        number = /^[0,9]{1,}$/
+        number = /^[0,9]{1,}$/,
+        //@ts-ignore
+        city = /^[А-ЯA-Z]{1}[a-zA-Zа-яА-Я]{1,}$/,
     }
 
     //@ts-ignore

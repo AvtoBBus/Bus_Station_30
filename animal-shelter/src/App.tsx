@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { HomePage } from './pages/HomePage';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
 import { AnimalType, User } from './shared/DataTypes';
@@ -23,8 +23,13 @@ export const App = () => {
     userId: "-1",
     userName: "anonim",
     userRole: "anonim",
+    city: "nowhere",
+    phone: "unknown",
+    email: "unknown",
     userActions: []
   }
+
+  const navigate = useNavigate();
 
   const [user, setUser] = useState<User>(initUser);
   const [pets, setPets] = useState<Array<AnimalType> | null>(null);
@@ -34,6 +39,9 @@ export const App = () => {
 
   const [regLogin, setRegLogin] = useState<string>("");
   const [regPass, setRegPass] = useState<string>("");
+  const [regPhone, setRegPhone] = useState<string>("");
+  const [regCity, setRegCity] = useState<string>("");
+  const [regMail, setRegMail] = useState<string>("");
 
   const [authError, setLoginError] = useState<string | null>(null);
   const [regError, setRegError] = useState<string | null>(null);
@@ -58,9 +66,8 @@ export const App = () => {
     return () => clearInterval(interval);
   }, [])
 
-  useEffect(() => {
+  const apiCall = () => {
     const userApi = new UserApi();
-
     Promise.all([
       userApi.userInfo(),
       userApi.getUserActions()
@@ -68,21 +75,21 @@ export const App = () => {
       .then(responses => {
         setUser({
           ...responses[0],
-          userActions: responses[1]
+          userActions: responses[1] ?? []
         });
       })
+      .catch(err => {
+        setUser(initUser);
+        window.location.pathname.includes("lk") && navigate("/")
+      })
+  }
+
+  useEffect(() => {
+
+    apiCall();
 
     const interval = setInterval(() => {
-      Promise.all([
-        userApi.userInfo(),
-        userApi.getUserActions()
-      ])
-        .then(responses => {
-          setUser({
-            ...responses[0],
-            userActions: responses[1] ?? []
-          });
-        })
+      apiCall();
     }, 5000);
 
     return () => clearInterval(interval);
@@ -97,7 +104,7 @@ export const App = () => {
 
   return <>
 
-    <UserContainer.Provider value={{ user: user, setUser: setUser }}>
+    <UserContainer.Provider value={{ user: user, setUser: setUser, forceUpdateUser: apiCall }}>
       <PetsContainer.Provider value={{ pets: pets ? pets : [], setPets: setPets }}>
 
         <Navigation
@@ -120,11 +127,14 @@ export const App = () => {
                 const userApi = new UserApi();
                 userApi.userRegister({
                   username: regLogin,
-                  password: regPass
+                  password: regPass,
+                  email: regMail,
+                  phone: regPhone,
+                  city: regCity,
                 })
                   .then(r => {
                     if (r.status >= 400) {
-                      setLoginError(r);
+                      setRegError(r);
                     }
                     else {
                       r.json()
@@ -143,6 +153,9 @@ export const App = () => {
                       loginButtonClick();
                       setRegLogin("");
                       setRegPass("");
+                      setRegMail("");
+                      setRegPhone("");
+                      setRegCity("");
                     }
                   })
               }}>
@@ -156,6 +169,39 @@ export const App = () => {
                   autoComplete="off"
                   value={regLogin}
                   onChange={(e) => setRegLogin(e.target.value)}
+                />
+
+                <label htmlFor="userMail-input">Почта</label>
+                <input
+                  type="email"
+                  id="userMail-input"
+                  name="userMail-input"
+                  required
+                  autoComplete="off"
+                  value={regMail}
+                  onChange={(e) => setRegMail(e.target.value)}
+                />
+
+                <label htmlFor="userPhone-input">Номер телефона</label>
+                <input
+                  type="tel"
+                  id="userPhone-input"
+                  name="userPhone-input"
+                  required
+                  autoComplete="off"
+                  value={regPhone}
+                  onChange={(e) => setRegPhone(e.target.value)}
+                />
+
+                <label htmlFor="userCity-input">Город</label>
+                <input
+                  type="text"
+                  id="userCity-input"
+                  name="userCity-input"
+                  required
+                  autoComplete="off"
+                  value={regCity}
+                  onChange={(e) => setRegCity(e.target.value)}
                 />
 
                 <label htmlFor="userPass-input">Пароль</label>
@@ -183,6 +229,9 @@ export const App = () => {
                     disabled={
                       !validateData(regLogin, "username")
                       || !validateData(regPass, "password")
+                      || !validateData(regMail, "email")
+                      || !validateData(regPhone, "phone")
+                      || !validateData(regCity, "city")
                     }
                     style={{ minWidth: "initial", maxWidth: "170px", width: "fit-content" }}
                     type="submit"
