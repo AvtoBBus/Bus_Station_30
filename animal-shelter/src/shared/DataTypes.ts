@@ -1,5 +1,3 @@
-import { StringMappingType } from "typescript"
-
 export interface AnimalType {
     _id: string,
     animalName: string,
