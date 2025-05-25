@@ -45,7 +45,8 @@ exports.userWantAdopt = async function (request, response) {
             phone: data.phone,
             email: data.email,
             animalType: data.animalType,
-            comment: data.comment
+            comment: data.comment,
+            status: "Ожидание"
         })
 
         console.log(id)
@@ -82,7 +83,8 @@ exports.userWantDonate = async function (request, response) {
             name: data.name,
             phone: data.phone,
             email: data.email,
-            donateSize: data.donateSize
+            donateSize: data.donateSize,
+            status: "Ожидание"
         })
 
         console.log(id)
@@ -119,7 +121,8 @@ exports.userWantVolunteer = async function (request, response) {
             name: data.name,
             phone: data.phone,
             email: data.email,
-            comment: data.comment
+            comment: data.comment,
+            status: "Ожидание"
         })
 
         console.log(id)

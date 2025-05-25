@@ -130,7 +130,10 @@ exports.auth = async function (request, response) {
             response.send({
                 userId: userFromDB.at(0)._id,
                 userName: userFromDB.at(0).userName,
-                userRole: userFromDB.at(0).userRole
+                userRole: userFromDB.at(0).userRole,
+                phone: userFromDB.at(0).phone,
+                city: userFromDB.at(0).city,
+                email: userFromDB.at(0).email
             });
             await client.close();
             return;
