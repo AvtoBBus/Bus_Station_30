@@ -124,8 +124,6 @@ exports.auth = async function (request, response) {
                 {
                     maxAge: 1000 * 60 * 15,
                     httpOnly: true,
-                    sameSite: "none",
-                    secure: true
                 })
             response.send({
                 userId: userFromDB.at(0)._id,

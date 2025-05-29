@@ -121,6 +121,7 @@ export const OurPetsPage = (props: { isOpenModal: boolean }) => {
                                         <option value="в приюте">в приюте</option>
                                         <option value="усыновлен">усыновлен</option>
                                         <option value="передержка">передержка</option>
+                                        <option value="на лечении">на лечении</option>
                                     </select>
                                 </>
                                 : <p>{data.status || 'Неизвестен'}</p>}

@@ -5,7 +5,12 @@
   "scripts": {
     "start-client": "cd animal-shelter & npm run start",
     "start-server": "node --env-file=./server/src/.env ./server/src/index.js",
-    "start": "npm-run-all --parallel start-server start-client"
+    "start": "npm-run-all --parallel start-server start-client",
+    "build-client": "cd animal-shelter & npm run build",
+    "copy-server-files": "scp -r ./server/* mistervoker163@158.160.172.247:/home/mistervoker163/animal-shelter/server",
+    "copy-client-files": "scp -r ./animal-shelter/build/* mistervoker163@158.160.172.247:/home/mistervoker163/animal-shelter/client",
+    "update-client": "run-s build-client copy-client-files",
+    "full-deploy": "npm-run-all --parallel copy-server-files update-client"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"

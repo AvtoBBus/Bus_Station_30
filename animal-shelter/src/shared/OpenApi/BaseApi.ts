@@ -1,6 +1,6 @@
 export class BaseApi {
 
-    private basePath = `http://localhost:5000/`;
+    private basePath = process.env.NODE_ENV === "development" ? 'http://localhost:5000/' : 'http://158.160.172.247:5000/';
 
     constructor(basePath?: string) {
         if (basePath) this.basePath = basePath

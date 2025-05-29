@@ -286,6 +286,7 @@ export const AdminPage = (props: {}) => {
                             <option value="в приюте">в приюте</option>
                             <option value="усыновлен">усыновлен</option>
                             <option value="передержка">передержка</option>
+                            <option value="на лечении">на лечении</option>
                         </select>
 
                         <label htmlFor="description">Описание:</label>

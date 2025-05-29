@@ -137,7 +137,17 @@ export const ActionForm = (props: {
                             })
                             .catch((err: any) => {
                                 setUserInfo(userInfoInit);
-                                setResponse("Что-то пошло не так(<br/>Попробуйте позже")
+                                err.text && err.text().then((err: string) => {
+                                    if (err.includes) {
+                                        err.includes("incorrect params") &&
+                                            setResponse("Неверные параметры формы");
+                                        err.includes("need body") &&
+                                            setResponse("Заполните заявку!");
+                                    }
+                                    else {
+                                        setResponse("Что-то пошло не так(<br/>Попробуйте позже")
+                                    }
+                                })
                             })
                     }
                 }}>
@@ -182,7 +192,7 @@ export const ActionForm = (props: {
                                 setResponse(null)
                             }}>Назад</button>
                         }
-                        <button type="submit" disabled={validateForm()}>Отправить заявку</button>
+                        <button type="submit" disabled={false && validateForm()}>Отправить заявку</button>
                     </div>
                     {response && <div id={`adoptMessageText${response.includes("Что-то пошло не так") ? "--error" : ""}`} dangerouslySetInnerHTML={{ __html: response }} />}
                     {!response
