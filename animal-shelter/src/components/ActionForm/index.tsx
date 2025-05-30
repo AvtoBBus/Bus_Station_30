@@ -195,6 +195,15 @@ export const ActionForm = (props: {
                         <button type="submit" disabled={false && validateForm()}>Отправить заявку</button>
                     </div>
                     {response && <div id={`adoptMessageText${response.includes("Что-то пошло не так") ? "--error" : ""}`} dangerouslySetInnerHTML={{ __html: response }} />}
+                    {
+                        !validateData(userInfo.name, "username") && userInfo.name.length !== 0 ?
+                            <div id="adoptMessageText--error">Введите корректный логин</div>
+                            : !validateData(userInfo.email, "email") && userInfo.email.length !== 0 ?
+                                <div id="adoptMessageText--error">Введите корректный email</div>
+                                : !validateData(userInfo.phone, "phone") && userInfo.phone.length !== 0 ?
+                                    <div id="adoptMessageText--error">Введите корректный телефон</div>
+                                    : <></>
+                    }
                     {!response
                         && userInfo.name !== ""
                         && userInfo.phone !== ""

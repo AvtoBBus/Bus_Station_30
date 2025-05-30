@@ -211,6 +211,11 @@ export const App = () => {
                   {authError && <>
                     <div id="adoptMessageText--error">{authError}</div>
                   </>}
+                  {
+                    !validateData(userLogin, "username") && userLogin.length !== 0 ?
+                      <div id="adoptMessageText--error">Введите корректный логин</div>
+                      : <></>
+                  }
                   {!authError
                     && userPass !== ""
                     && !validateData(userPass, "password")
@@ -348,6 +353,17 @@ export const App = () => {
                   {regError && <>
                     <div id="adoptMessageText--error">{regError}</div>
                   </>}
+                  {
+                    !validateData(regLogin, "username") && regLogin.length !== 0 ?
+                      <div id="adoptMessageText--error">Введите корректный логин</div>
+                      : !validateData(regMail, "email") && regMail.length !== 0 ?
+                        <div id="adoptMessageText--error">Введите корректный email</div>
+                        : !validateData(regPhone, "phone") && regPhone.length !== 0 ?
+                          <div id="adoptMessageText--error">Введите корректный телефон</div>
+                          : !validateData(regCity, "city") && regCity.length !== 0 ?
+                            <div id="adoptMessageText--error">Введите корректный город</div>
+                            : <></>
+                  }
                   {!regError
                     && regPass !== ""
                     && !validateData(regPass, "password")
